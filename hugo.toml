@@ -1,0 +1,26 @@
+title = 'Blog by Shaheer'
+theme = 'hugo-brewm'
+
+[params]
+  title = "Technical Blog"
+  description = "My personal blog"
+  copyright = "Copyright 2026 © Me"
+  ZenMode = false              # true = minimal layout
+
+  [params.author]
+    name = 'Shaheer Khalid'
+    email = 'shaheerkhalid963@gmail.com'
+
+  [params.posts]
+    justifying = false         # text justification
+    share = true               # share buttons
+    related = true             # related posts
+    colophon = true            # QR code section
+
+  [params.typeface]
+    roman = 'crimson'          # serif font: 'Cormorant', 'EB Garamond', 'crimson'
+    sans = 'inter'             # sans font: 'Inter', 'Montserrat', 'Rosario'
+
+  [params.search]
+    enable = true
+    pagefind = true
