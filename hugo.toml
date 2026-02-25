@@ -1,3 +1,4 @@
+baseURL = 'https://blog.shaheerkj.me/'
 title = 'Blog by Shaheer'
 theme = 'hugo-brewm'
 
