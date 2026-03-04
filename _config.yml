@@ -1,0 +1,88 @@
+title: Blog by Shaheer
+tagline: Technical Blog
+description: My personal blog
+lang: en
+
+timezone: UTC
+
+url: https://blog.shaheerkj.me
+baseurl: ""
+
+permalink: /posts/:title/
+
+theme: jekyll-theme-chirpy
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+paginate: 10
+
+github:
+  username: shaheerkj
+
+social:
+  name: Shaheer Khalid
+  email: shaheerkhalid963@gmail.com
+  links:
+    - https://github.com/shaheerkj
+
+plugins:
+  - jekyll-paginate
+  - jekyll-archives
+  - jekyll-include-cache
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - readme.md
+  - node_modules
+  - vendor
+  - themes
+  - public
+  - resources
+  - hugo.toml
+  - config.toml
+  - archetypes
+  - content
+  - data
+  - i18n
+  - static
+  - "*.gemspec"
+  - rollup.config.js
+  - package.json
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      toc: true
+      comments: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+  - scope:
+      path: ""
+    values:
+      layout: default

@@ -1,0 +1,26 @@
+# Jekyll build output
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.bundle/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor files
+*.swp
+*.swo
+*.bak
+*.tmp
+*~
+
+# Node
+node_modules/
+package-lock.json
+
+# Vendor bundle
+vendor/
+vendor/bundle/

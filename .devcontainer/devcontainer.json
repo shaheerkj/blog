@@ -1,0 +1,20 @@
+{
+  "name": "Jekyll (Chirpy)",
+  "image": "mcr.microsoft.com/devcontainers/jekyll:2-bookworm",
+  "forwardPorts": [4000],
+  "portsAttributes": {
+    "4000": {
+      "label": "Jekyll Server"
+    }
+  },
+  "postCreateCommand": "bundle install",
+  "postStartCommand": "bundle exec jekyll serve --livereload --host 0.0.0.0",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "yzhang.markdown-all-in-one",
+        "shopify.ruby-lsp"
+      ]
+    }
+  }
+}
