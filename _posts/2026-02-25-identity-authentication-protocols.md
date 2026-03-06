@@ -139,3 +139,46 @@ Components of OAuth2.0:
     The `oid` claim is the most important one — it's the user's permanent, unique identifier in Entra ID. Use this as their ID in your database, not their email (emails can change).
 
 # OpenID connect (OIDC):
+
+OpenID Connect (OIDC) is an identity layer built on top of OAuth 2.0. If OAuth 2.0 answers **"what is this app allowed to do on the user's behalf?"**, OIDC answers **"who is this user?"** in a standard, interoperable way.
+
+## How OIDC extends OAuth 2.0
+
+- **Reuses OAuth 2.0 flows**: Authorization code flow, access tokens, refresh tokens, redirect URIs, scopes, etc.
+- **Adds an `id_token`**: A signed JWT that the client validates to prove the user's identity.
+- **Defines standard scopes and claims**: Scopes like `openid`, `profile`, `email` and well-known claims (`sub`, `email`, `name`, etc.) so different identity providers expose user info in a common shape.
+- **Standardizes discovery**: Via the `/.well-known/openid-configuration` endpoint so clients can auto-discover the correct authorization, token, and JWKS endpoints.
+
+In the Microsoft Entra example above, the moment you added the `openid profile email` scopes and received an `id_token`, you moved from **plain OAuth 2.0** into **OpenID Connect**:
+
+- The **access token** is for calling APIs on behalf of the user (authorization).
+- The **ID token** is for logging the user into your app and answering "who just signed in?" (authentication).
+
+OIDC is what powers most modern **"Sign in with X"** buttons (Microsoft, Google, GitHub, etc.) and is generally the preferred choice for new web and mobile applications, because it gives you a clean, token-based answer to both questions from the big picture section:
+
+1. Who is the user? → From the `id_token` and its claims.
+2. What are they allowed to do? → From scopes and access tokens (via OAuth 2.0).
+
+# Comparing SAML, OAuth 2.0 and OIDC
+
+- **Primary goal**
+  - **SAML**: Enterprise SSO between a corporate identity provider and browser-based applications.
+  - **OAuth 2.0**: Delegated authorization – let an application call APIs on behalf of a user.
+  - **OIDC**: Authentication – log the user in and give the app a verified identity for them.
+
+- **Token / data format**
+  - **SAML**: XML-based assertions passed via browser redirects or POSTs.
+  - **OAuth 2.0**: Access tokens (opaque or JWT) used to protect APIs.
+  - **OIDC**: JWT ID tokens (plus OAuth 2.0 access tokens when you also call APIs).
+
+- **Best suited for**
+  - **SAML**: Older/SaaS apps in enterprise SSO ecosystems (Okta, legacy ADFS-style setups).
+  - **OAuth 2.0**: Securing APIs, microservices, and third‑party integrations.
+  - **OIDC**: User sign‑in flows for modern web, SPA, and mobile applications.
+
+A helpful way to remember it:
+
+- **SAML and OIDC** are mainly about **"who is the user?"** (authentication and SSO).
+- **OAuth 2.0** is mainly about **"what is this app allowed to do?"** (authorization against APIs and resources).
+
+In many real systems you will use OAuth 2.0 and OIDC together for a complete identity story: OIDC to sign the user in and establish who they are, and OAuth 2.0 scopes and access tokens to control what your services and APIs are allowed to do on their behalf.
