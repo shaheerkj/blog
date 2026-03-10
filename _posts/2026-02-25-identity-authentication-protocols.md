@@ -2,7 +2,7 @@
 title: "Identity & Authentication Protocols"
 date: 2026-02-25
 author: shaheerkj
-tags: [authentication]
+tags: [authentication, IAM, Entra ID, Identity Management]
 categories: [Security, Cloud Security]
 description: "This post explores the identity and authentication protocol that support modern day web infrastructure"
 image:
