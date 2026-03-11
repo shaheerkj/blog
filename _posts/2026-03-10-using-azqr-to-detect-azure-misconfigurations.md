@@ -29,8 +29,9 @@ From the official repo, there are two ways to install it:
 - `winget install azqr`
 
 OR
-
-  ```Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/azure/azqr/main/scripts/install.ps1'))```
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/azure/azqr/main/scripts/install.ps1'))
+```
 
 Since I was using PowerShell at the time, I went with the latter option. This one-liner downloads and runs the azqr install script directly from GitHub.
 
@@ -48,7 +49,7 @@ The option we're interested in is `scan`, which allows us to scan a subscription
 
 Syntax for the scan command:
 
-```
+```powershell
 azqr scan -s <SUB_ID>
 ```
 The `scan` command offers several additional flags and options, the most notable being:
