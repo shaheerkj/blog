@@ -6,7 +6,7 @@ tags: [Microsoft Entra ID, Azure AD Connect, Hybrid Identity, Password Hash Sync
 categories: [Authentication, Cloud Security]
 description: "A hands-on breakdown of the three hybrid identity authentication methods used in enterprise Microsoft environments — Password Hash Sync, Pass-Through Authentication, and ADFS. Covers how each method works under the hood, when organizations choose one over another, and the real security tradeoffs involved. Includes a step-by-step lab walkthrough of deploying each method using Azure VMs, Azure AD Cloud sync, and Entra ID."
 image:
-  path: /assets/img/3-authentication-methods/cover.png
+  path: /assets/img/4-authentication-methods/cover.png
 ---
 
 HYBRID IDENTITY LAB
@@ -23,7 +23,8 @@ This lab deploys a simulated on-premises Windows Active Directory environment in
 
 
 ## Architecture Diagram (Text)
-```Azure Subscription
+```
+Azure Subscription
   └── Resource Group: rg-hybrid-lab
         ├── VNet: vnet-lab (10.0.0.0/16)
         │     └── Subnet: snet-dc (10.0.1.0/24)
@@ -33,7 +34,6 @@ This lab deploys a simulated on-premises Windows Active Directory environment in
         │     └── Entra Cloud Sync agent
         └── VM-ADFS01  (Windows Server 2022 — Federation Server)
               └── ADFS Role
-
 Entra ID Tenant (your M365 Dev Tenant)
   └── Synced users from lab.local domain
   └── Hybrid identity authentication methods configured
