@@ -6,7 +6,7 @@ tags: [Microsoft Entra ID, Azure AD Connect, Hybrid Identity, Password Hash Sync
 categories: [Authentication, Cloud Security]
 description: "A hands-on breakdown of the three hybrid identity authentication methods used in enterprise Microsoft environments — Password Hash Sync, Pass-Through Authentication, and ADFS. Covers how each method works under the hood, when organizations choose one over another, and the real security tradeoffs involved. Includes a step-by-step lab walkthrough of deploying each method using Azure VMs, Azure AD Cloud sync, and Entra ID."
 image:
-  path: /assets/img/3-azqr/cover.png
+  path: /assets/img/3-authentication-methods/cover.png
 ---
 
 HYBRID IDENTITY LAB
@@ -23,7 +23,7 @@ This lab deploys a simulated on-premises Windows Active Directory environment in
 
 
 ## Architecture Diagram (Text)
-Azure Subscription
+```Azure Subscription
   └── Resource Group: rg-hybrid-lab
         ├── VNet: vnet-lab (10.0.0.0/16)
         │     └── Subnet: snet-dc (10.0.1.0/24)
@@ -37,7 +37,7 @@ Azure Subscription
 Entra ID Tenant (your M365 Dev Tenant)
   └── Synced users from lab.local domain
   └── Hybrid identity authentication methods configured
-
+```
 
 ## Cost Estimate
 Two B2s VMs (~$0.048/hr each) + storage. Total: ~$5–8 for a full weekend lab if you deallocate VMs when not in use. Always stop (deallocate) VMs when not actively working.
@@ -49,10 +49,10 @@ Two B2s VMs (~$0.048/hr each) + storage. Total: ~$5–8 for a full weekend lab i
 ## Step 1.1 — Create Resource Group and VNet
 Everything for this lab lives in one resource group. This makes cleanup easy — delete the resource group and everything goes.
 - In Azure Portal → Resource Groups → Create
-- Name: rg-hybrid-lab | Region: choose one close to you (e.g. West Europe)
+- Name: rg-hybrid-lab - Region: choose one close to you (e.g. West Europe)
 - Go to Virtual Networks → Create
-- Name: vnet-lab | Address space: 10.0.0.0/16
-- Add subnet: snet-dc | Address range: 10.0.1.0/24
+- Name: vnet-lab - Address space: 10.0.0.0/16
+- Add subnet: snet-dc - Address range: 10.0.1.0/24
 - Review + Create
 
 
@@ -62,7 +62,7 @@ Everything for this lab lives in one resource group. This makes cleanup easy —
 - VM name: VM-DC01
 - Image: Windows Server 2022 Datacenter — Gen2
 - Size: Standard_B2s (2 vCPUs, 4GB RAM — cheapest viable option)
-- Administrator username: labadmin | Password: something strong, write it down
+- Administrator username: labadmin - Password: something strong, write it down
 - Under Networking — select vnet-lab and snet-dc subnet
 - Public IP: create one (needed for RDP access)
 - Under Inbound ports — allow RDP (3389) — we will lock this down after
@@ -91,9 +91,9 @@ Domain Controllers must have a static IP — DNS registration breaks if the IP c
 - After reboot, RDP back in as: lab\labadmin
 💡 Tip:  lab.local is a non-routable domain used purely for lab purposes. In production, you would use a real domain you own (e.g. yourdomain.com).
 
-[adds](/assets/img/4-authentication-methods/installing-adds.png)
+![adds](/assets/img/4-authentication-methods/installing-adds.png)
 
-[installation-finished](/assets/img/4-authentication-methods/adds-installation-done.png)
+![installation-finished](/assets/img/4-authentication-methods/adds-installation-done.png)
 
 ## Step 1.5 — Create Lab Users and OUs in Active Directory
 Create a realistic OU structure — this matters when you configure sync scope later.
@@ -102,15 +102,15 @@ Create a realistic OU structure — this matters when you configure sync scope l
 - Create another OU: LabAdmins
 - Inside LabUsers, create 3 test users:
 - Right-click LabUsers → New → User
-- User 1: First: Alice | Last: Smith | UPN: alice.smith@lab.local | Password: Lab@12345!
-- User 2: Bob Jones | bob.jones@lab.local
-- User 3: Carol Lee | carol.lee@lab.local
+- User 1: First: Alice - Last: Smith - UPN: alice.smith@lab.local - Password: Lab@12345!
+- User 2: Bob Jones - bob.jones@lab.local
+- User 3: Carol Lee - carol.lee@lab.local
 
-[lab-users](/assets/img/4-authentication-methods/lab-users.png)
+![lab-users](/assets/img/4-authentication-methods/lab-users.png)
 
-- Inside LabAdmins, create: Admin User | admin.user@lab.local — add to Domain Admins group
+- Inside LabAdmins, create: Admin User - admin.user@lab.local — add to Domain Admins group
 
-[lab-admin](/assets/img/4-authentication-methods/lab-admins.png)
+![lab-admin](/assets/img/4-authentication-methods/lab-admins.png)
 
 
 ## Step 1.6 — Configure VNet DNS to point to DC
@@ -119,7 +119,7 @@ Azure VMs use Azure DNS by default. We need them to use our DC for AD DNS resolu
 - Change to Custom → Enter 10.0.1.4 (VM-DC01 static IP)
 - Save — restart VM-DC01 to pick up the DNS change
 
-[custom-dns](/assets/img/4-authentication-methods/custom-dns-server.png)
+![custom-dns](/assets/img/4-authentication-methods/custom-dns-server.png)
 
 # Phase 2 — Password Hash Sync (PHS)
 
@@ -136,7 +136,7 @@ You cannot sync lab.local to Entra ID — .local is non-routable. You need to ad
 - Back in VM-DC01 → Tools → Active Directory Domains and Trusts → Right-click (Active Directory Domains and Trusts) → Properties → UPN Suffixes
 - Add your verified domain or your onmicrosoft.com domain as an alternative UPN suffix
 
-[custom-domain](/assets/img/4-authentication-methods/adding-domain.png)
+![custom-domain](/assets/img/4-authentication-methods/adding-domain.png)
 - Update your test users' UPN to use the new suffix: alice.smith@xxx.onmicrosoft.com
 
 
@@ -158,9 +158,12 @@ You cannot sync lab.local to Entra ID — .local is non-routable. You need to ad
 - You should see alice.smith, bob.jones, carol.lee appear as synced users
 - Click on alice.smith — note the Source field shows: Windows Server AD
 - Go to Entra ID → Azure AD Connect (under Hybrid management) — verify sync status shows Enabled
-💡 Tip:  Sync runs every 30 minutes by default. To force an immediate sync: on VM-DC01 open PowerShell and run: Start-ADSyncSyncCycle -PolicyType Delta
+💡 Tip:  Sync runs every 30 minutes by default. To force an immediate sync: on VM-DC01 open PowerShell and run: 
+```
+Start-ADSyncSyncCycle -PolicyType Delta
+```
 
-[users-synced](/assets/img/4-authentication-methods/successful-phs-sync.png)
+![users-synced](/assets/img/4-authentication-methods/successful-phs-sync.png)
 
 
 ## Step 2.4 — Test PHS Authentication
@@ -171,7 +174,7 @@ You cannot sync lab.local to Entra ID — .local is non-routable. You need to ad
 🔴 Important:  For PHS to work, the UPN of the synced user must match a verified domain in Entra ID. If you see authentication failures, the UPN suffix mismatch is the most likely cause.
 
 Logging in as as alice smith
-[logged-in-as-alice-smith](/assets/img/4-authentication-methods/alice-smith-phs-login.png)
+![logged-in-as-alice-smith](/assets/img/4-authentication-methods/alice-smith-phs-login.png)
 
 
 # Phase 3 — Pass-Through Authentication (PTA)
@@ -187,7 +190,7 @@ When to use PTA vs PHS:  PTA is used when organizational policy requires that pa
 - Enter your Entra ID Global Admin credentials
 - Select: Pass-through authentication → Next
 - Verify that Enable single sign-on is also checked
-[pta-config](/assets/img/4-authentication-methods/pta-config.png)
+![pta-config](/assets/img/4-authentication-methods/pta-config.png)
 - Configure → the PTA agent is automatically installed on VM-DC01
 
 
@@ -196,7 +199,7 @@ When to use PTA vs PHS:  PTA is used when organizational policy requires that pa
 - You should see VM-DC01 listed as an active agent with status: Active
 - The agent version and last active timestamp confirm it is communicating with Entra ID
 
-[pta-agent](/assets/img/4-authentication-methods/pta-agent.png)
+![pta-agent](/assets/img/4-authentication-methods/pta-agent.png)
 
 
 ## Step 3.3 — Test PTA Authentication
@@ -205,7 +208,8 @@ When to use PTA vs PHS:  PTA is used when organizational policy requires that pa
 - Check Sign-in logs → authentication method now shows: Pass-through authentication
 - To see what happens when on-prem fails: stop the Azure AD Connect PTA agent service on VM-DC01 → attempt sign-in again → it should fail
 - Restart the agent service → verify sign-in works again
-⚠ Warning:  Stopping the PTA agent in production would lock out users. This is why production deployments run multiple PTA agents on different servers for redundancy.
+
+> ⚠ Warning:  Stopping the PTA agent in production would lock out users. This is why production deployments run multiple PTA agents on different servers for redundancy.
 
 
 # Phase 4 — Active Directory Federation Services (ADFS)
@@ -217,9 +221,9 @@ Why ADFS is legacy but still important:  Most large enterprises built their fede
 
 ## Step 4.1 — Deploy Second VM for ADFS (VM-ADFS01)
 - In Azure Portal → Virtual Machines → Create
-- Name: VM-ADFS01 | Same resource group, same VNet, same subnet
-- Image: Windows Server 2022 Datacenter | Size: Standard_B2s
-- Username: labadmin | Same password
+- Name: VM-ADFS01 - Same resource group, same VNet, same subnet
+- Image: Windows Server 2022 Datacenter - Size: Standard_B2s
+- Username: labadmin - Same password
 - Allow RDP inbound
 - Create → wait for deployment
 - After deployment: join VM-ADFS01 to lab.local domain
@@ -227,7 +231,7 @@ Why ADFS is legacy but still important:  Most large enterprises built their fede
   - Windows + R → type `sysdm.cpl` & enter → Click Change button next to "To rename this computer or change its domain" → Domain: lab.local
   - Enter lab\labadmin credentials → reboot
 
-[domain-join](/assets/img/4-authentication-methods/domain-change-adfs.png)
+![domain-join](/assets/img/4-authentication-methods/domain-change-adfs.png)
 
 ## Step 4.2 — Create a Self-Signed Certificate for ADFS
 ADFS requires an SSL certificate. For lab purposes we use a self-signed cert.
@@ -239,13 +243,13 @@ $cert = New-SelfSignedCertificate -DnsName 'adfs.lab.local' -CertStoreLocation '
 - Export the thumbprint for later:
 `$cert.Thumbprint`
 
-[adfs-cert](/assets/img/4-authentication-methods/adfs-cert.png)
+![adfs-cert](/assets/img/4-authentication-methods/adfs-cert.png)
 
 
 ## Step 4.3 — Install ADFS Role on VM-ADFS01
 - Open Server Manager → Add Roles and Features
 
-[adfs-role](/assets/img/4-authentication-methods/adfs-role.png)
+![adfs-role](/assets/img/4-authentication-methods/adfs-role.png)
 
 > This is enough for learning purposes. Converting an Entra ID domain to ADFS-federated in 2026 is a legacy operation. Microsoft's own documentation now steers you toward migrating away from ADFS, not toward it. We can safely ignore the rest of this ADFS lab.
 
@@ -301,7 +305,7 @@ Convert-MsolDomainToStandard -DomainName xxx.onmicrosoft.com -SkipUserConversion
 -PasswordFile C:\temp\passwords.txt
 - Also switch Azure AD Connect back to PHS or disable it — Cloud Sync and Azure AD Connect cannot run simultaneously on the same domain
 
-[Disable Connect](/assets/img/4-authentication-methods/disable-connect-sync.png)
+![Disable Connect](/assets/img/4-authentication-methods/disable-connect-sync.png)
 
 
 ## Step 5.2 — Install the Entra Cloud Sync Provisioning Agent
@@ -313,16 +317,16 @@ Convert-MsolDomainToStandard -DomainName xxx.onmicrosoft.com -SkipUserConversion
 - Add lab.local domain → enter lab\labadmin credentials
 - Finish installation
 
-[cloud-sync](/assets/img/4-authentication-methods/entra-cloud-sync.png)
+![cloud-sync](/assets/img/4-authentication-methods/entra-cloud-sync.png)
 
 ## Step 5.3 — Create a Cloud Sync Configuration in Entra ID Portal
 - In Entra ID portal → Azure AD Connect → Cloud sync → New configuration
 - Select: lab.local from the dropdown
 - Enable Password Hash Sync: Yes
 
-[](/assets/img/4-authentication-methods/config-entra-cloud-sync.png)
+![config-entra-cloud-sync](/assets/img/4-authentication-methods/config-entra-cloud-sync.png)
 - Under Scope — add a scoping filter to sync only the LabUsers OU:
-- Attribute: distinguishedName | Operator: CONTAINS | Value: OU=LabUsers,DC=lab,DC=local
+- Attribute: distinguishedName - Operator: CONTAINS - Value: OU=LabUsers,DC=lab,DC=local
 - Review attribute mappings — observe how AD attributes map to Entra ID attributes
 - Enable the configuration → Save
 - Monitor the provisioning logs in the portal — you will see each user synced in real time
@@ -338,7 +342,7 @@ Convert-MsolDomainToStandard -DomainName xxx.onmicrosoft.com -SkipUserConversion
 
 # What You've Built & What It Means
 
-[summary](/assets/img/4-authentication-methods/summary.png)
+![summary](/assets/img/4-authentication-methods/summary.png)
 
 ## Cleanup — Avoid Unnecessary Azure Costs
 - When done for the day: go to both VMs → Stop (this deallocates them, stopping compute charges)
