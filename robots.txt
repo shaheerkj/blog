@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /norobots/
+Sitemap: https://blog.shaheerkj.me/sitemap.xml
