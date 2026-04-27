@@ -23,6 +23,7 @@ kramdown:
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: "highlight"
+  header_offset: 1
 
 sass:
   style: compressed
@@ -43,6 +44,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-last-modified-at
 
 jekyll-archives:
   enabled:
@@ -93,3 +95,4 @@ defaults:
       path: ""
     values:
       layout: default
+      image: /assets/img/avatar.png

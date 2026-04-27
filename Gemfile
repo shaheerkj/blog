@@ -7,6 +7,7 @@ gem "jekyll-include-cache"
 gem "jekyll-sitemap"
 gem "jekyll-feed"
 gem "jekyll-seo-tag"
+gem "jekyll-last-modified-at"
 
 group :jekyll_plugins do
   gem "webrick", "~> 1.8"

@@ -7,9 +7,16 @@ layout: default
   {%- assign posts = site.posts -%}
 {%- endif -%}
 
+{%- if paginator == nil or paginator.page == 1 -%}
+<header class="hero" aria-label="Introduction">
+  <h1 class="hero__title">{{ page.headline | default: site.tagline }}</h1>
+  <p class="hero__lede">{{ page.lede | default: site.description }}</p>
+</header>
+{%- endif -%}
+
 <section class="stream" aria-label="Writing">
   <header class="stream__head">
-    <span class="stream__eyebrow">{{ site.tagline | default: 'Writing' }}</span>
+    <span class="stream__eyebrow">writing</span>
   </header>
 
   <ol class="entries" role="list">

@@ -181,9 +181,34 @@ body {
 }
 .sidebar__url::before { content: ""; }
 
+/* ───────── home hero ───────── */
+.hero {
+  margin-bottom: 3.5rem;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.hero__title {
+  font-family: var(--serif);
+  font-size: clamp(1.875rem, 3.4vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 22ch;
+  margin-bottom: 0.75rem;
+}
+.hero__lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
 /* ───────── stream / home ───────── */
 .stream__head {
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.5rem;
 }
 .stream__eyebrow {
   display: inline-block;
