@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<section class="taxonomy">
+  <header class="archive__head">
+    <span class="stream__eyebrow">tags</span>
+    <h1 class="archive__title">{{ page.title | default: 'Tags' }}</h1>
+  </header>
+
+  <ul class="taxonomy__list taxonomy__list--inline" role="list">
+    {%- assign tags = site.tags | sort -%}
+    {%- for tag in tags -%}
+      <li class="taxonomy__chip">
+        <a href="{{ '/tags/' | append: tag[0] | relative_url }}/">{{ tag[0] | downcase }}</a>
+        <span class="taxonomy__count">{{ tag[1].size }}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>

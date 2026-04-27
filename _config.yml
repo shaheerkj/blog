@@ -10,14 +10,22 @@ baseurl: ""
 
 permalink: /posts/:title/
 
-theme: jekyll-theme-chirpy
-
 collections:
   tabs:
     output: true
     sort_by: order
 
 paginate: 10
+paginate_path: "/page/:num/"
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
+
+sass:
+  style: compressed
 
 github:
   username: shaheerkj
@@ -74,7 +82,6 @@ defaults:
       type: posts
     values:
       layout: post
-      toc: true
       comments: false
   - scope:
       path: ""

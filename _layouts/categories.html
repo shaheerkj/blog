@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<section class="taxonomy">
+  <header class="archive__head">
+    <span class="stream__eyebrow">categories</span>
+    <h1 class="archive__title">{{ page.title | default: 'Categories' }}</h1>
+  </header>
+
+  <ul class="taxonomy__list" role="list">
+    {%- assign cats = site.categories | sort -%}
+    {%- for cat in cats -%}
+      <li class="taxonomy__row">
+        <a class="taxonomy__link" href="{{ '/categories/' | append: cat[0] | relative_url }}/">{{ cat[0] | downcase }}</a>
+        <span class="taxonomy__count">{{ cat[1].size }}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>

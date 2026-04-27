@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<section class="archive">
+  <header class="archive__head">
+    <span class="stream__eyebrow">archive</span>
+    <h1 class="archive__title">{{ page.title | default: 'Archive' }}</h1>
+  </header>
+
+  {%- assign posts_by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" -%}
+  {%- for year in posts_by_year -%}
+  <section class="archive__year">
+    <h2 class="archive__year-label">{{ year.name }}</h2>
+    <ol class="archive__list" role="list">
+      {%- for post in year.items -%}
+      <li class="archive__row">
+        <time class="archive__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b" | downcase }}</time>
+        <a class="archive__link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </li>
+      {%- endfor -%}
+    </ol>
+  </section>
+  {%- endfor -%}
+</section>

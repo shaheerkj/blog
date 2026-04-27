@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+{%- include head.html -%}
+</head>
+<body class="layout-{{ page.layout | default: 'default' }}{% if page.url == '/' %} is-home{% endif %}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    {%- include sidebar.html -%}
+    <main id="main" class="main">
+      {{ content }}
+    </main>
+  </div>
+</body>
+</html>

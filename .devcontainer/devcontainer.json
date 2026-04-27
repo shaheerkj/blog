@@ -1,5 +1,5 @@
 {
-  "name": "Jekyll (Chirpy)",
+  "name": "Jekyll — shaheerkj.me",
   "image": "mcr.microsoft.com/devcontainers/jekyll:2-bookworm",
   "forwardPorts": [4000],
   "portsAttributes": {

@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<section class="stream">
+  <header class="stream__head">
+    <span class="stream__eyebrow">tag</span>
+    <h1 class="archive__title">{{ page.title }}</h1>
+  </header>
+
+  <ol class="entries" role="list">
+    {%- for post in page.posts -%}
+      <li class="entry">
+        <a class="entry__link" href="{{ post.url | relative_url }}">
+          <div class="entry__meta">
+            <span class="entry__rule" aria-hidden="true">—</span>
+            <time class="entry__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" | downcase }}</time>
+          </div>
+          <h2 class="entry__title">{{ post.title }}</h2>
+          {%- if post.description -%}<p class="entry__dek">{{ post.description }}</p>{%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ol>
+</section>

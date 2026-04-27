@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{%- if paginator -%}
+  {%- assign posts = paginator.posts -%}
+{%- else -%}
+  {%- assign posts = site.posts -%}
+{%- endif -%}
+
+<section class="stream" aria-label="Writing">
+  <header class="stream__head">
+    <span class="stream__eyebrow">{{ site.tagline | default: 'Writing' }}</span>
+  </header>
+
+  <ol class="entries" role="list">
+    {%- for post in posts -%}
+      {%- assign words = post.content | strip_html | number_of_words -%}
+      {%- assign read_time = words | divided_by: 220 | at_least: 1 -%}
+      <li class="entry">
+        <a class="entry__link" href="{{ post.url | relative_url }}">
+          <div class="entry__meta">
+            {%- if post.pinned -%}
+              <span class="entry__pin">pinned</span>
+            {%- else -%}
+              <span class="entry__rule" aria-hidden="true">—</span>
+            {%- endif -%}
+            <time class="entry__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" | downcase }}</time>
+            <span class="entry__sep" aria-hidden="true">·</span>
+            <span class="entry__read">{{ read_time }} min</span>
+          </div>
+          <h2 class="entry__title">{{ post.title }}</h2>
+          {%- if post.description -%}
+            <p class="entry__dek">{{ post.description }}</p>
+          {%- elsif post.excerpt -%}
+            <p class="entry__dek">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+          {%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ol>
+
+  {%- if paginator and paginator.total_pages > 1 -%}
+  <nav class="pager" aria-label="Pagination">
+    {%- if paginator.previous_page -%}
+      <a class="pager__link" href="{{ paginator.previous_page_path | relative_url }}">← newer</a>
+    {%- else -%}
+      <span class="pager__link is-disabled" aria-disabled="true">← newer</span>
+    {%- endif -%}
+    <span class="pager__count">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+    {%- if paginator.next_page -%}
+      <a class="pager__link" href="{{ paginator.next_page_path | relative_url }}">older →</a>
+    {%- else -%}
+      <span class="pager__link is-disabled" aria-disabled="true">older →</span>
+    {%- endif -%}
+  </nav>
+  {%- endif -%}
+</section>
