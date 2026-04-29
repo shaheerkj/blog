@@ -1,14 +1,12 @@
 {%- assign words = include.post.content | strip_html | number_of_words -%}
 {%- assign read_time = words | divided_by: 220 | at_least: 1 -%}
 <div class="meta">
-  <span class="meta__rule" aria-hidden="true">—</span>
-  <time class="meta__date" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%d %b %Y" | downcase }}</time>
-  <span class="meta__sep" aria-hidden="true">·</span>
+  <span class="meta__badge"><span class="meta__dot" aria-hidden="true"></span>essay</span>
+  <time class="meta__date" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: "%Y.%m.%d" }}</time>
   <span class="meta__read">{{ read_time }} min read</span>
   {%- if include.post.categories.size > 0 -%}
-  <span class="meta__sep" aria-hidden="true">·</span>
   <span class="meta__cats">
-    {%- for c in include.post.categories -%}{{ c | downcase }}{% unless forloop.last %}, {% endunless %}{%- endfor -%}
+    {%- for c in include.post.categories -%}{{ c | downcase }}{% unless forloop.last %} · {% endunless %}{%- endfor -%}
   </span>
   {%- endif -%}
 </div>

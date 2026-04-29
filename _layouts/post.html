@@ -1,50 +1,61 @@
 ---
 layout: default
 ---
-<article class="post" itemscope itemtype="https://schema.org/BlogPosting">
-  <header class="post__head">
-    {% include post-meta.html post=page %}
-    <h1 class="post__title" itemprop="headline">{{ page.title }}</h1>
-    {%- if page.description -%}
-      <p class="post__dek" itemprop="description">{{ page.description }}</p>
+<div class="postpage">
+  <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="post__head">
+      {% include post-meta.html post=page %}
+      <h1 class="post__title" itemprop="headline">{{ page.title }}</h1>
+      {%- if page.description -%}
+        <p class="post__dek" itemprop="description">{{ page.description }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if page.image -%}
+      {%- assign cover = page.image.path | default: page.image -%}
+      <figure class="post__cover">
+        <img src="{{ cover | relative_url }}" alt="{{ page.image.alt | default: page.title | escape }}" loading="eager" itemprop="image">
+      </figure>
     {%- endif -%}
-  </header>
 
-  {%- if page.image -%}
-    {%- assign cover = page.image.path | default: page.image -%}
-    <figure class="post__cover">
-      <img src="{{ cover | relative_url }}" alt="{{ page.image.alt | default: page.title | escape }}" loading="eager" itemprop="image">
-    </figure>
-  {%- endif -%}
-
-  <div class="post__body prose" itemprop="articleBody">
-    {{ content }}
-  </div>
-
-  <footer class="post__foot">
-    <div class="ornament" aria-hidden="true">{% include monogram.html %}</div>
-
-    {%- if page.tags and page.tags.size > 0 -%}
-    <div class="tags" aria-label="Tags">
-      {%- for tag in page.tags -%}
-        <a class="tag" href="{{ '/tags/' | append: tag | relative_url }}/">{{ tag | downcase }}</a>{% unless forloop.last %} {% endunless %}
-      {%- endfor -%}
+    <div class="post__body prose" itemprop="articleBody">
+      {{ content }}
     </div>
-    {%- endif -%}
 
-    <nav class="post__nav" aria-label="Post navigation">
-      {%- if page.previous -%}
-        <a class="post__nav-link post__nav-link--prev" href="{{ page.previous.url | relative_url }}">
-          <span class="post__nav-eyebrow">previous</span>
-          <span class="post__nav-title">{{ page.previous.title }}</span>
-        </a>
-      {%- else -%}<span></span>{%- endif -%}
-      {%- if page.next -%}
-        <a class="post__nav-link post__nav-link--next" href="{{ page.next.url | relative_url }}">
-          <span class="post__nav-eyebrow">next</span>
-          <span class="post__nav-title">{{ page.next.title }}</span>
-        </a>
-      {%- else -%}<span></span>{%- endif -%}
-    </nav>
-  </footer>
-</article>
+    <footer class="post__foot">
+      <hr class="post__rule" aria-hidden="true">
+
+      {%- if page.tags and page.tags.size > 0 -%}
+      <div class="tags" aria-label="Tags">
+        {%- for tag in page.tags -%}
+          <a class="tag" href="{{ '/tags/' | append: tag | relative_url }}/">{{ tag | downcase }}</a>{% unless forloop.last %} {% endunless %}
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+
+      <nav class="post__nav" aria-label="Post navigation">
+        {%- if page.previous -%}
+          <a class="post__nav-link post__nav-link--prev" href="{{ page.previous.url | relative_url }}">
+            <span class="post__nav-eyebrow">← Previous</span>
+            <span class="post__nav-title">{{ page.previous.title }}</span>
+          </a>
+        {%- else -%}<span></span>{%- endif -%}
+        {%- if page.next -%}
+          <a class="post__nav-link post__nav-link--next" href="{{ page.next.url | relative_url }}">
+            <span class="post__nav-eyebrow">Next →</span>
+            <span class="post__nav-title">{{ page.next.title }}</span>
+          </a>
+        {%- else -%}<span></span>{%- endif -%}
+      </nav>
+    </footer>
+  </article>
+
+  <aside class="toc" aria-label="On this page" data-toc>
+    <div class="toc__inner">
+      <span class="toc__eyebrow"><span class="toc__eyebrow-dot" aria-hidden="true"></span>On this page</span>
+      <ol class="toc__list" role="list" data-toc-list></ol>
+    </div>
+  </aside>
+</div>
+
+<script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>

@@ -5,11 +5,13 @@
 </head>
 <body class="layout-{{ page.layout | default: 'default' }}{% if page.url == '/' %} is-home{% endif %}">
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="shell">
-    {%- include sidebar.html -%}
-    <main id="main" class="main">
+  {%- include topnav.html -%}
+  <main id="main" class="main">
+    <div class="main__inner">
       {{ content }}
-    </main>
-  </div>
+    </div>
+  </main>
+  {%- include wordmark.html -%}
+  {%- include sitefoot.html -%}
 </body>
 </html>

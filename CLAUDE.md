@@ -122,16 +122,24 @@ Recommendation: **#1 + #2.** The mockup's masthead already does half the work of
 - Rewrite or delete the stale `readme.md` (currently describes Hugo, not Jekyll).
 - Document the custom theme structure briefly.
 
-## Locked decisions (2026-04-27, revised)
+## Locked decisions (2026-04-29, archival-dark direction)
 
-- **Fonts:** macOS system stack only — no web fonts loaded.
-  - Serif: `ui-serif, "New York", "Iowan Old Style", "Charter", Cambria, Georgia, serif`
-  - Sans: `-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Helvetica Neue", "Segoe UI", system-ui, sans-serif`
-  - Mono: `ui-monospace, "SF Mono", Menlo, "Cascadia Mono", Consolas, monospace`
-  - Rationale: native everywhere (SF on Apple, Segoe on Windows), zero network cost, no FOUT.
-- **Palette:** warm dark only for v1.
-  - bg `#1A1612` · surface `#221D18` · ink `#E8DDC9` · ink-soft `#C7BBA6` · muted `#8E8273` · rule `#342D24` · accent `#D88A4A` (warm amber/rust).
-- **Signature:** monogram (dash/diamond/dash SVG) + drop cap on first post paragraph.
+References: type system inspired by Nancy Jo Iacoi (Heldane/Lyon/Newsam — paid); palette and layout vocabulary from LogoArchive on Godly (true-dark, single yellow accent, big hero, full-bleed footer wordmark, sans-only chrome).
+
+- **Fonts:** Geist + Geist Mono + Fraunces, loaded from Google Fonts.
+  - Sans (chrome, hero, headlines, post titles, nav): `Geist`
+  - Mono (dates, eyebrow labels, captions, code, small UI): `Geist Mono`
+  - Serif (post body paragraphs only — for long-form reading): `Fraunces` (variable, characterful free analogue to Heldane)
+  - Rationale: Geist pair gives the LogoArchive geometric-grotesque feel for chrome; Fraunces gives editorial weight inside posts where you actually read.
+- **Palette:** true-dark + single yellow accent.
+  - bg `#0A0A0A` · bg-lift `#141414` · bg-card `#181818` · ink `#EDEDED` · ink-soft `#BDBDBD` · muted `#6F6F6F` · rule `#1F1F1F` · accent `#F4ED1F` (LogoArchive yellow).
+  - Accent used sparingly: subscribe CTA, active nav dot, link underlines, pinned tag, hover state.
+- **Layout:** drop the left sidebar entirely.
+  - Top nav (sticky, blurred): mark + glyph left, primary links centered, subscribe pill right.
+  - Single-column main with measured `--shell-max: 80rem`, post body centered at `44rem`.
+  - Full-bleed wordmark "Shaheer Khalid" between content and site footer (text-stroke outline, like LogoArchive's "Discover").
+  - Site footer: copy left, RSS/Sitemap/Email/GitHub center, domain right.
+- **Signature:** drop cap on first post paragraph + full-bleed wordmark + small monogram in nav corner.
 - **Comments:** stay off.
 - **Read-time:** keep, in mono next to the date.
 

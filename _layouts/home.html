@@ -9,14 +9,22 @@ layout: default
 
 {%- if paginator == nil or paginator.page == 1 -%}
 <header class="hero" aria-label="Introduction">
-  <h1 class="hero__title">{{ page.headline | default: site.tagline }}</h1>
-  <p class="hero__lede">{{ page.lede | default: site.description }}</p>
+  <aside class="hero__caption">
+    <span class="hero__badge"><span class="hero__badge-dot" aria-hidden="true"></span>{{ site.tagline | default: 'writing' }}</span>
+    <p class="hero__intro">{{ page.intro | default: site.description }}</p>
+  </aside>
+  <h1 class="hero__title">{{ page.headline | default: 'Notes on cloud, identity, and the systems we trust.' }}</h1>
+  <div class="hero__cta">
+    <a class="btn btn--primary" href="#writing">Read the latest</a>
+    <a class="btn btn--ghost" href="{{ '/about/' | relative_url }}">About</a>
+  </div>
 </header>
 {%- endif -%}
 
-<section class="stream" aria-label="Writing">
+<section id="writing" class="stream" aria-label="Writing">
   <header class="stream__head">
-    <span class="stream__eyebrow">writing</span>
+    <span class="stream__badge"><span class="stream__badge-dot" aria-hidden="true"></span>writing</span>
+    <span class="stream__count">{{ site.posts | size }} {% if site.posts.size == 1 %}entry{% else %}entries{% endif %}</span>
   </header>
 
   <ol class="entries" role="list">
@@ -26,21 +34,20 @@ layout: default
       <li class="entry">
         <a class="entry__link" href="{{ post.url | relative_url }}">
           <div class="entry__meta">
+            <span class="entry__index">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+            <time class="entry__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+            <span class="entry__read">{{ read_time }} min</span>
             {%- if post.pinned -%}
               <span class="entry__pin">pinned</span>
-            {%- else -%}
-              <span class="entry__rule" aria-hidden="true">—</span>
             {%- endif -%}
-            <time class="entry__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" | downcase }}</time>
-            <span class="entry__sep" aria-hidden="true">·</span>
-            <span class="entry__read">{{ read_time }} min</span>
           </div>
           <h2 class="entry__title">{{ post.title }}</h2>
           {%- if post.description -%}
             <p class="entry__dek">{{ post.description }}</p>
           {%- elsif post.excerpt -%}
-            <p class="entry__dek">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+            <p class="entry__dek">{{ post.excerpt | strip_html | truncate: 160 }}</p>
           {%- endif -%}
+          <span class="entry__more" aria-hidden="true">Read <span class="entry__arrow">→</span></span>
         </a>
       </li>
     {%- endfor -%}

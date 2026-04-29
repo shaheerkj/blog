@@ -1,0 +1,12 @@
+<footer class="sitefoot" aria-label="Site footer">
+  <div class="sitefoot__row">
+    <span class="sitefoot__copy">© {{ site.time | date: "%Y" }} {{ site.social.name | default: site.title }}.</span>
+    <nav class="sitefoot__links" aria-label="Footer">
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a>
+      {% if site.social.email %}<a href="mailto:{{ site.social.email }}">Email</a>{% endif %}
+      {% if site.github.username %}<a href="https://github.com/{{ site.github.username }}" rel="me">GitHub</a>{% endif %}
+    </nav>
+    <span class="sitefoot__url">{{ site.url | replace: 'https://', '' | replace: 'http://', '' }}</span>
+  </div>
+</footer>

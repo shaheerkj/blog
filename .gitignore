@@ -24,3 +24,7 @@ package-lock.json
 # Vendor bundle
 vendor/
 vendor/bundle/
+
+.claude/
+rmr.png
+CLAUDE.md
