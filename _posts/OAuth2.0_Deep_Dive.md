@@ -1,3 +1,13 @@
+---
+title: "OAuth 2.0: A Comprehensive Deep Dive"
+date: 2026-04-29
+author: shaheerkj
+tags: [oauth2.0, authorization, IAM, IAM, Entra ID, Identity Management]
+categories: [Security, Cloud Security]
+description: "This post explores the identity and authentication protocol that support modern day web infrastructure"
+image:
+  path:
+---
 # OAuth 2.0: A Comprehensive Technical Reference
 
 > **Audience:** Security practitioners, cloud engineers, and developers studying IAM, SC-200, or modern authentication protocols.  
