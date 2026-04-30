@@ -95,4 +95,3 @@ defaults:
       path: ""
     values:
       layout: default
-      image: /assets/img/avatar.png
